@@ -6,17 +6,17 @@
 
 <meta name="description" content="Island Survival is a casual survival game where players gather resources, craft items, fight enemies, and conquer islands.">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="keywords" content="island survival game, casual survival, crafting, mobile game, island adventure">
 
-<!-- SEO -->
+<!-- SEO Open Graph -->
 <meta property="og:title" content="Island Survival">
 <meta property="og:description" content="Gather, Craft, Build, Fight & Explore Multiple Islands">
-<meta property="og:image" content="assets/cover.jpg">
+<meta property="og:image" content="images/image1.png">
 <meta property="og:type" content="website">
 
 <link rel="manifest" href="manifest.json">
 
 <style>
-/* ---------------- ROOT ---------------- */
 :root {
     --bg: #eef2f7;
     --card: #ffffff;
@@ -24,172 +24,61 @@
     --accent: #2ecc71;
     --dark: #0f172a;
 }
+body.night { --bg: #020617; --card: #0f172a; --text: #e5e7eb; }
 
-body.night {
-    --bg: #020617;
-    --card: #0f172a;
-    --text: #e5e7eb;
-}
+body { margin:0; font-family: system-ui, Arial, sans-serif; background: var(--bg); color: var(--text); }
 
-body {
-    margin: 0;
-    font-family: system-ui, Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-}
+.hero { height:90vh; background: linear-gradient(#7dd3fc,#22c55e); display:flex; flex-direction:column; justify-content:center; text-align:center; color:white; }
+.hero h1{ font-size:3.5em; margin:0; }
+.hero p{ font-size:1.2em; max-width:700px; margin:20px auto; }
+.hero img{ height:70px; margin-top:30px; }
 
-/* ---------------- HERO ---------------- */
-.hero {
-    height: 90vh;
-    background: linear-gradient(#7dd3fc, #22c55e);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    color: white;
-}
+/* Sections */
+section { max-width:1400px; margin:auto; padding:90px 6vw; }
+h2 { font-size:2.4em; margin-bottom:30px; }
 
-.hero h1 {
-    font-size: 3.5em;
-}
+/* Gameplay loop */
+.loop { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:30px; }
+.loop div{ background:var(--card); border-radius:18px; padding:30px; text-align:center; box-shadow:0 10px 25px rgba(0,0,0,0.08);}
+.loop div span{ font-size:2em; }
 
-.hero p {
-    font-size: 1.2em;
-    max-width: 700px;
-    margin: auto;
-}
+/* Resources */
+.resources { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:30px; }
+.resource { background:var(--card); border-radius:18px; padding:25px; position:relative; }
+.resource img{ width:140px; float:right; cursor:pointer; transition: transform 0.3s; }
+.resource img:hover{ transform:scale(1.1); }
 
-.hero img {
-    height: 70px;
-    margin-top: 30px;
-}
+/* Crafting tree */
+.craft-tree { display:flex; gap:40px; flex-wrap:wrap; }
+.node { background:var(--card); padding:20px 30px; border-radius:16px; position:relative; }
+.node::after { content:"→"; position:absolute; right:-30px; top:50%; transform:translateY(-50%); font-size:1.5em; }
 
-/* ---------------- SECTIONS ---------------- */
-section {
-    max-width: 1400px;
-    margin: auto;
-    padding: 90px 6vw;
-}
+/* Enemies */
+.enemies { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:30px; }
+.enemy { background:var(--card); border-radius:20px; padding:25px; }
+.enemy img { width:100%; border-radius:14px; }
 
-h2 {
-    font-size: 2.4em;
-    margin-bottom: 30px;
-}
+/* Map */
+.map { background:var(--card); border-radius:20px; padding:30px; text-align:center; }
 
-/* ---------------- GAME LOOP ---------------- */
-.loop {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
-    gap: 30px;
-}
+/* Trailer */
+.trailer { background: var(--card); border-radius:20px; padding:30px; }
+.video-wrapper { position: relative; padding-bottom: 56.25%; height:0; overflow:hidden; border-radius:16px; }
+.video-wrapper iframe { position:absolute; top:0; left:0; width:100%; height:100%; border:0; }
 
-.loop div {
-    background: var(--card);
-    border-radius: 18px;
-    padding: 30px;
-    text-align: center;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-}
+/* Skill tree */
+.skill-tree { display:flex; gap:30px; flex-wrap:wrap; }
+.skill { background:var(--card); padding:20px; border-radius:16px; flex:1; text-align:center; }
 
-.loop div span {
-    font-size: 2em;
-}
+/* Footer */
+footer { background:var(--card); padding:40px; text-align:center; }
 
-/* ---------------- RESOURCES ---------------- */
-.resources {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
-    gap: 30px;
-}
+/* Modal */
+.modal { position:fixed; inset:0; background: rgba(0,0,0,0.7); display:none; align-items:center; justify-content:center; z-index:100; }
+.modal img { max-width:90%; border-radius:20px; }
 
-.resource {
-    background: var(--card);
-    border-radius: 18px;
-    padding: 25px;
-    position: relative;
-}
-
-.resource img {
-    width: 140px;
-    float: right;
-    cursor: pointer;
-    transition: transform 0.3s;
-}
-
-.resource img:hover {
-    transform: scale(1.1);
-}
-
-/* ---------------- CRAFT TREE ---------------- */
-.craft-tree {
-    display: flex;
-    gap: 40px;
-    flex-wrap: wrap;
-}
-
-.node {
-    background: var(--card);
-    padding: 20px 30px;
-    border-radius: 16px;
-    position: relative;
-}
-
-.node::after {
-    content: "→";
-    position: absolute;
-    right: -30px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 1.5em;
-}
-
-/* ---------------- ENEMIES ---------------- */
-.enemies {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px,1fr));
-    gap: 30px;
-}
-
-.enemy {
-    background: var(--card);
-    border-radius: 20px;
-    padding: 25px;
-}
-
-.enemy img {
-    width: 100%;
-    border-radius: 14px;
-}
-
-/* ---------------- MAP ---------------- */
-.map {
-    background: var(--card);
-    border-radius: 20px;
-    padding: 30px;
-    text-align: center;
-}
-
-/* ---------------- FOOTER ---------------- */
-footer {
-    background: var(--card);
-    padding: 40px;
-    text-align: center;
-}
-
-/* ---------------- MODAL ---------------- */
-.modal {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.7);
-    display: none;
-    align-items: center;
-    justify-content: center;
-}
-
-.modal img {
-    max-width: 90%;
-    border-radius: 20px;
-}
+/* Responsive */
+@media(max-width:600px){ .hero h1{ font-size:2.5em; } .loop div, .resources .resource, .enemies .enemy, .skill { padding:20px; } }
 </style>
 </head>
 
@@ -200,9 +89,19 @@ footer {
     <h1>Island Survival</h1>
     <p>Gather resources, craft tools, build shelters, fight enemies and conquer dangerous islands.</p>
     <a href="https://play.google.com/store">
-        <img src="assets/google-play-badge.png">
+        <img src="images/google-play-badge.png" alt="Download on Google Play">
     </a>
 </div>
+
+<!-- GAME TRAILER -->
+<section>
+<h2>Game Trailer</h2>
+<div class="trailer">
+    <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/VIDEO_ID_HERE" title="Island Survival Trailer" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+</div>
+</section>
 
 <!-- GAME LOOP -->
 <section>
@@ -218,20 +117,18 @@ footer {
 
 <!-- RESOURCES -->
 <section>
-<h2>Resources & Conversions</h2>
+<h2>Resources & Crafting</h2>
 <div class="resources">
 <div class="resource">
 <h3>Wood → Planks</h3>
 <p>Used for shelters, tools, and bridges.</p>
 <img src="images/image1.png" onclick="openModal(this.src)">
 </div>
-
 <div class="resource">
 <h3>Stone → Bricks</h3>
 <p>Stronger structures and defenses.</p>
 <img src="images/image1.png" onclick="openModal(this.src)">
 </div>
-
 <div class="resource">
 <h3>Fish → Cooked Food</h3>
 <p>Restores energy and stamina.</p>
@@ -244,9 +141,9 @@ footer {
 <section>
 <h2>Crafting Progression</h2>
 <div class="craft-tree">
-    <div class="node">Wood</div>
-    <div class="node">Planks</div>
-    <div class="node">Buildings</div>
+<div class="node">Wood</div>
+<div class="node">Planks</div>
+<div class="node">Buildings</div>
 </div>
 </section>
 
@@ -255,7 +152,7 @@ footer {
 <h2>Enemies & Bosses</h2>
 <div class="enemies">
 <div class="enemy">
-<img src="images/image1.png">
+<img src="images/image1.png" alt="Island Guardian">
 <h3>Island Guardian</h3>
 <p>High HP · Area attacks · Guards island core</p>
 <a href="boss-guardian.html">View Boss Details</a>
@@ -263,7 +160,7 @@ footer {
 </div>
 </section>
 
-<!-- MAP -->
+<!-- MULTI-ISLAND MAP -->
 <section>
 <h2>Multi-Island World</h2>
 <div class="map">
@@ -272,13 +169,27 @@ footer {
 </div>
 </section>
 
+<!-- SKILL TREE -->
+<section>
+<h2>Player Skills</h2>
+<div class="skill-tree">
+<div class="skill">Chopping Speed</div>
+<div class="skill">Mining Power</div>
+<div class="skill">Combat Damage</div>
+<div class="skill">Fishing Skill</div>
+<div class="skill">Energy Management</div>
+</div>
+</section>
+
+<!-- FOOTER -->
 <footer>
 <p>© 2025 Aarohi Studio</p>
 <audio controls loop>
-<source src="assets/ocean.mp3">
+<source src="images/image1.png" type="audio/mpeg">
 </audio>
 </footer>
 
+<!-- IMAGE MODAL -->
 <div class="modal" onclick="this.style.display='none'">
 <img id="modalImg">
 </div>
@@ -289,6 +200,7 @@ function openModal(src){
     document.getElementById("modalImg").src = src;
 }
 
+/* Day/Night Sync */
 const hour = new Date().getHours();
 if(hour >= 18 || hour <= 6) document.body.classList.add("night");
 </script>
