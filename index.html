@@ -2,268 +2,340 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Island Survival – Casual Survival Adventure Game</title>
+<title>Island Survival – Casual Survival Adventure</title>
 
-<meta name="description" content="Island Survival is a casual survival game where you explore islands, craft items, fight enemies and survive with day-night cycles, weather, missions and bosses.">
+<meta name="description" content="Island Survival is a casual survival game with crafting, enemies, bosses, missions, and multiple islands.">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- SEO -->
-<link rel="canonical" href="https://yourname.github.io/">
-<meta name="theme-color" content="#0b1220">
+<meta property="og:title" content="Island Survival">
+<meta property="og:description" content="Explore islands, craft tools, fight enemies, and survive at your pace">
+<meta property="og:image" content="assets/cover.jpg">
+<meta property="og:type" content="website">
 
-<!-- PWA -->
 <link rel="manifest" href="manifest.json">
 
 <style>
-:root{
---bg:#0b1220;
---text:#e5e7eb;
---accent:#2ecc71;
---card:#111827;
+/* ---------------- ROOT ---------------- */
+:root {
+    --sky-day: linear-gradient(#87ceeb, #e0f6ff);
+    --sky-night: linear-gradient(#020617, #0f172a);
+    --bg: #f5f7fa;
+    --card: #ffffff;
+    --text: #1f2933;
+    --accent: #2ecc71;
 }
 
-*{box-sizing:border-box}
-body{
-margin:0;
-font-family:system-ui,Arial;
-background:var(--bg);
-color:var(--text);
-overflow-x:hidden;
+body.night {
+    --bg: #020617;
+    --card: #0f172a;
+    --text: #e5e7eb;
 }
 
-/* HERO */
-.hero{
-height:100vh;
-background:
-linear-gradient(to top,rgba(0,0,0,.7),rgba(0,0,0,.3)),
-url("images/island-bg.jpg") center/cover fixed;
-display:flex;
-align-items:center;
-justify-content:center;
-text-align:center;
-position:relative;
+body {
+    margin: 0;
+    font-family: system-ui, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
 }
-.hero h1{font-size:4rem}
-.hero p{max-width:700px;margin:20px auto}
-.hero a img{height:80px;margin-top:20px}
+
+/* ---------------- SKY ---------------- */
+.sky {
+    height: 100vh;
+    background: var(--sky-day);
+    position: relative;
+    overflow: hidden;
+}
+
+body.night .sky {
+    background: var(--sky-night);
+}
 
 /* CLOUDS */
-.clouds{
-position:absolute;
-top:0;left:0;
-width:200%;
-height:100%;
-background:url("images/image1.png") repeat-x;
-animation:cloudMove 120s linear infinite;
-opacity:.35;
-pointer-events:none;
-}
-@keyframes cloudMove{
-from{transform:translateX(0)}
-to{transform:translateX(-50%)}
+.cloud {
+    position: absolute;
+    top: 15%;
+    width: 220px;
+    opacity: 0.8;
+    animation: moveClouds 60s linear infinite;
 }
 
-/* RAIN */
-.rain{
-position:absolute;
-inset:0;
-background:url("images/image1.png");
-animation:rain 0.4s linear infinite;
-opacity:.2;
-pointer-events:none;
-}
-@keyframes rain{
-from{background-position:0 0}
-to{background-position:0 100%}
+.cloud:nth-child(2) { top: 30%; animation-duration: 90s; }
+.cloud:nth-child(3) { top: 45%; animation-duration: 120s; }
+
+@keyframes moveClouds {
+    from { transform: translateX(-300px); }
+    to { transform: translateX(120vw); }
 }
 
-/* SECTION */
-section{
-padding:120px 20px;
-max-width:1400px;
-margin:auto;
-}
-h2{text-align:center;font-size:2.8rem;margin-bottom:40px}
-
-/* GRID */
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:40px;
-}
-.card{
-background:var(--card);
-padding:30px;
-border-radius:24px;
+/* ---------------- PARALLAX ISLAND ---------------- */
+.parallax {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60vh;
 }
 
-/* AI */
-.ai{
-display:flex;
-justify-content:space-between;
-gap:20px;
-}
-.state{
-flex:1;
-padding:30px;
-border-radius:20px;
-background:#020617;
-text-align:center;
-opacity:.3;
-transition:.4s;
-}
-.state.active{
-opacity:1;
-outline:3px solid var(--accent);
+.layer {
+    position: absolute;
+    bottom: 0;
+    width: 200%;
+    height: 100%;
+    background-repeat: repeat-x;
+    animation: moveLayer linear infinite;
 }
 
-/* SVG CRAFT */
-svg{
-width:100%;
-max-width:800px;
-display:block;
-margin:auto;
-}
-.node{
-fill:#1f2937;
-stroke:#2ecc71;
-stroke-width:3;
-cursor:pointer;
-}
-.link{
-stroke:#2ecc71;
-stroke-width:4;
-stroke-dasharray:10;
-animation:dash 2s linear infinite;
-}
-@keyframes dash{
-to{stroke-dashoffset:-20}
+.layer.back {
+    background-image: url("assets/island-back.png");
+    animation-duration: 120s;
 }
 
-/* SOUND */
-.sound{
-position:fixed;
-top:20px;
-right:20px;
-background:var(--accent);
-color:#000;
-padding:12px 16px;
-border-radius:14px;
-font-weight:800;
-cursor:pointer;
-z-index:999;
+.layer.mid {
+    background-image: url("assets/island-mid.png");
+    animation-duration: 80s;
 }
 
-/* FOOTER */
-footer{
-padding:60px;
-text-align:center;
-background:#020617;
+.layer.front {
+    background-image: url("assets/island-front.png");
+    animation-duration: 40s;
 }
 
-/* MOBILE */
-@media(max-width:900px){
-.hero h1{font-size:2.6rem}
-.ai{flex-direction:column}
+@keyframes moveLayer {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+
+/* ---------------- HERO ---------------- */
+.hero {
+    position: absolute;
+    top: 20%;
+    width: 100%;
+    text-align: center;
+    color: white;
+}
+
+.hero h1 {
+    font-size: 3em;
+}
+
+.hero a img {
+    height: 70px;
+    margin-top: 20px;
+}
+
+/* ---------------- SECTIONS ---------------- */
+section {
+    padding: 80px 5vw;
+    max-width: 1400px;
+    margin: auto;
+}
+
+h2 {
+    font-size: 2.2em;
+    margin-bottom: 30px;
+}
+
+/* ---------------- RESOURCES ---------------- */
+.resources {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+    gap: 30px;
+}
+
+.resource {
+    background: var(--card);
+    border-radius: 18px;
+    padding: 20px;
+    position: relative;
+}
+
+.resource img {
+    width: 120px;
+    float: right;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.resource img:hover {
+    transform: scale(1.1);
+}
+
+/* ---------------- MODAL ---------------- */
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal img {
+    max-width: 90%;
+    border-radius: 20px;
+    animation: zoom 0.4s ease;
+}
+
+@keyframes zoom {
+    from { transform: scale(0.6); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* ---------------- CRAFTING GRAPH ---------------- */
+svg {
+    width: 100%;
+    height: 500px;
+}
+
+/* ---------------- ENEMIES ---------------- */
+.enemies {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
+    gap: 30px;
+}
+
+.enemy {
+    background: var(--card);
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.enemy img {
+    width: 100%;
+}
+
+/* ---------------- SKILL TREE ---------------- */
+.skill-tree {
+    display: flex;
+    gap: 30px;
+}
+
+.skill {
+    background: var(--card);
+    padding: 20px;
+    border-radius: 16px;
+}
+
+/* ---------------- FOOTER ---------------- */
+footer {
+    text-align: center;
+    padding: 40px;
+    background: var(--card);
 }
 </style>
 </head>
 
 <body>
 
-<!-- SOUND -->
-<div class="sound" id="soundBtn">🔊 Sound OFF</div>
-<audio id="ambience" loop>
-<source src="audio/ambience.mp3" type="audio/mpeg">
-</audio>
+<!-- SKY -->
+<div class="sky">
+    <img src="assets/cloud.png" class="cloud">
+    <img src="assets/cloud.png" class="cloud">
+    <img src="assets/cloud.png" class="cloud">
 
-<!-- HERO -->
-<div class="hero">
-<div class="clouds"></div>
-<div class="rain"></div>
-<div>
-<h1>ISLAND SURVIVAL</h1>
-<p>Stranded. Alone. Survive the island.</p>
+    <div class="parallax">
+        <div class="layer back"></div>
+        <div class="layer mid"></div>
+        <div class="layer front"></div>
+    </div>
 
-<!-- PLAY STORE BADGE -->
-<a href="https://play.google.com/store/apps/details?id=YOUR_PACKAGE"
-aria-label="Download Island Survival on Google Play">
-<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png"
-alt="Get it on Google Play">
-</a>
-</div>
+    <div class="hero">
+        <h1>Island Survival</h1>
+        <p>Craft · Explore · Fight · Survive</p>
+        <a href="https://play.google.com/store">
+            <img src="assets/google-play-badge.png">
+        </a>
+    </div>
 </div>
 
-<!-- ENEMY AI -->
+<!-- RESOURCES -->
 <section>
-<h2>Enemy AI Behavior</h2>
-<div class="ai" id="ai">
-<div class="state">Patrol</div>
-<div class="state">Detect</div>
-<div class="state">Chase</div>
-<div class="state">Attack</div>
-<div class="state">Retreat</div>
+<h2>Resources & Crafting</h2>
+<div class="resources">
+<div class="resource">
+<h3>Wood → Planks</h3>
+<p>Chop trees to craft planks for building shelters.</p>
+<img src="assets/image1.png" onclick="openModal(this.src)">
+</div>
+
+<div class="resource">
+<h3>Stone → Bricks</h3>
+<p>Mine stones to craft strong brick structures.</p>
+<img src="assets/image1.png" onclick="openModal(this.src)">
+</div>
+
+<div class="resource">
+<h3>Fish → Cooked Fish</h3>
+<p>Catch fish and cook to restore energy.</p>
+<img src="assets/image1.png" onclick="openModal(this.src)">
+</div>
 </div>
 </section>
 
 <!-- CRAFTING GRAPH -->
 <section>
-<h2>Crafting System</h2>
-
-<svg viewBox="0 0 800 300">
-<line class="link" x1="150" y1="150" x2="350" y2="150"/>
-<line class="link" x1="350" y1="150" x2="550" y2="150"/>
-
-<circle class="node" cx="150" cy="150" r="40" onclick="craft('Wood → Harvested from trees')"/>
-<circle class="node" cx="350" cy="150" r="40" onclick="craft('Planks → Crafted from wood')"/>
-<circle class="node" cx="550" cy="150" r="40" onclick="craft('Building → Use planks to build shelter')"/>
+<h2>Crafting Tree</h2>
+<svg>
+<line x1="100" y1="250" x2="300" y2="150" stroke="#2ecc71" stroke-width="4"/>
+<line x1="100" y1="250" x2="300" y2="350" stroke="#2ecc71" stroke-width="4"/>
+<circle cx="100" cy="250" r="30" fill="#2ecc71"/>
+<circle cx="300" cy="150" r="30" fill="#16a34a"/>
+<circle cx="300" cy="350" r="30" fill="#16a34a"/>
 </svg>
+</section>
 
-<p id="craftText" style="text-align:center;margin-top:20px"></p>
+<!-- ENEMIES -->
+<section>
+<h2>Enemies & Bosses</h2>
+<div class="enemies">
+<div class="enemy">
+<img src="assets/image1.png">
+<h3>Island Guardian</h3>
+<p>HP: 5000 · Slow but deadly</p>
+<a href="boss-guardian.html">View Boss</a>
+</div>
+</div>
+</section>
+
+<!-- SKILLS -->
+<section>
+<h2>Skill Tree</h2>
+<div class="skill-tree">
+<div class="skill">Chopping Speed</div>
+<div class="skill">Mining Power</div>
+<div class="skill">Combat Damage</div>
+</div>
 </section>
 
 <footer>
-© 2025 Aarohi Studio  
-<br>Casual survival adventure built with passion
+<p>© 2025 Aarohi Studio</p>
+<audio controls loop>
+<source src="assets/ocean.mp3">
+</audio>
 </footer>
 
+<!-- IMAGE MODAL -->
+<div class="modal" onclick="this.style.display='none'">
+<img id="modalImg">
+</div>
+
 <script>
-// SOUND
-const audio=document.getElementById("ambience");
-const btn=document.getElementById("soundBtn");
-let playing=false;
-
-btn.onclick=()=>{
-playing=!playing;
-if(playing){
-audio.play();
-btn.textContent="🔊 Sound ON";
-}else{
-audio.pause();
-btn.textContent="🔇 Sound OFF";
+/* MODAL */
+function openModal(src){
+    document.querySelector(".modal").style.display="flex";
+    document.getElementById("modalImg").src = src;
 }
-};
-document.addEventListener("visibilitychange",()=>{
-if(document.hidden) audio.pause();
+
+/* DAY/NIGHT SYNC */
+const hour = new Date().getHours();
+if(hour >= 18 || hour <= 6) document.body.classList.add("night");
+
+/* PWA */
+let deferredPrompt;
+window.addEventListener("beforeinstallprompt", e=>{
+    deferredPrompt = e;
 });
-
-// AI ANIMATION
-let i=0;
-setInterval(()=>{
-document.querySelectorAll(".state").forEach(s=>s.classList.remove("active"));
-document.querySelectorAll(".state")[i].classList.add("active");
-i=(i+1)%5;
-},1500);
-
-// CRAFT TEXT
-function craft(text){
-document.getElementById("craftText").textContent=text;
-}
-
-// SERVICE WORKER
-if("serviceWorker" in navigator){
-navigator.serviceWorker.register("sw.js");
-}
 </script>
 
 </body>
