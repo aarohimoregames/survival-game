@@ -2,28 +2,24 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Island Survival – Casual Survival Game</title>
+<title>Island Survival – Casual Survival Adventure Game</title>
 
-<meta name="description" content="Island Survival is a casual survival game with crafting, enemies, missions, multiple islands, day-night cycle, and weather systems.">
+<meta name="description" content="Island Survival is a casual survival game where you explore islands, craft items, fight enemies and survive with day-night cycles, weather, missions and bosses.">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Open Graph -->
-<meta property="og:title" content="Island Survival">
-<meta property="og:description" content="Explore islands, craft items, fight enemies and survive.">
-<meta property="og:type" content="website">
-<meta property="og:image" content="images/cover.jpg">
+<!-- SEO -->
+<link rel="canonical" href="https://yourname.github.io/">
+<meta name="theme-color" content="#0b1220">
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
 
 <style>
 :root{
---bg:#f5f7fa;
---text:#1f2933;
---card:#ffffff;
---primary:#2ecc71;
-}
-body.dark{
---bg:#0f172a;
+--bg:#0b1220;
 --text:#e5e7eb;
---card:#1e293b;
+--accent:#2ecc71;
+--card:#111827;
 }
 
 *{box-sizing:border-box}
@@ -32,257 +28,242 @@ margin:0;
 font-family:system-ui,Arial;
 background:var(--bg);
 color:var(--text);
-transition:.4s;
-}
-
-/* HEADER */
-header{
-position:sticky;top:0;
-background:var(--card);
-padding:16px 24px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-z-index:100;
+overflow-x:hidden;
 }
 
 /* HERO */
 .hero{
-padding:120px 20px;
+height:100vh;
+background:
+linear-gradient(to top,rgba(0,0,0,.7),rgba(0,0,0,.3)),
+url("images/island-bg.jpg") center/cover fixed;
+display:flex;
+align-items:center;
+justify-content:center;
 text-align:center;
-background:linear-gradient(135deg,#1abc9c,#2ecc71);
-color:#fff;
+position:relative;
 }
-.hero h1{font-size:3rem}
+.hero h1{font-size:4rem}
 .hero p{max-width:700px;margin:20px auto}
-.hero a{
-display:inline-block;
-padding:18px 32px;
-background:#0b6623;
-color:#fff;
-border-radius:14px;
-text-decoration:none;
-font-weight:700;
+.hero a img{height:80px;margin-top:20px}
+
+/* CLOUDS */
+.clouds{
+position:absolute;
+top:0;left:0;
+width:200%;
+height:100%;
+background:url("images/clouds.png") repeat-x;
+animation:cloudMove 120s linear infinite;
+opacity:.35;
+pointer-events:none;
+}
+@keyframes cloudMove{
+from{transform:translateX(0)}
+to{transform:translateX(-50%)}
 }
 
-/* SECTIONS */
+/* RAIN */
+.rain{
+position:absolute;
+inset:0;
+background:url("images/rain.png");
+animation:rain 0.4s linear infinite;
+opacity:.2;
+pointer-events:none;
+}
+@keyframes rain{
+from{background-position:0 0}
+to{background-position:0 100%}
+}
+
+/* SECTION */
 section{
+padding:120px 20px;
 max-width:1400px;
 margin:auto;
-padding:80px 20px;
 }
-h2{text-align:center;font-size:2.4rem;margin-bottom:50px}
+h2{text-align:center;font-size:2.8rem;margin-bottom:40px}
 
 /* GRID */
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:30px;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:40px;
 }
 .card{
 background:var(--card);
 padding:30px;
-border-radius:20px;
-box-shadow:0 15px 35px rgba(0,0,0,.15);
-transition:.3s;
-}
-.card:hover{transform:translateY(-6px)}
-.card img{
-width:100%;
-border-radius:16px;
-margin-top:15px;
-cursor:pointer;
+border-radius:24px;
 }
 
-/* MODAL IMAGE */
-#modal{
-position:fixed;inset:0;
-background:rgba(0,0,0,.85);
-display:none;
-justify-content:center;
-align-items:center;
-z-index:999;
-}
-#modal img{
-max-width:90%;
-max-height:90%;
-border-radius:20px;
-animation:zoom .4s;
-}
-@keyframes zoom{from{transform:scale(.7)}to{transform:scale(1)}}
-
-/* VIDEO */
-.video{
-position:relative;
-padding-bottom:56.25%;
-height:0;
-border-radius:20px;
-overflow:hidden;
-}
-.video iframe{
-position:absolute;width:100%;height:100%;
-}
-
-/* CRAFT TREE */
-.craft{
+/* AI */
+.ai{
 display:flex;
-justify-content:center;
-align-items:center;
-gap:40px;
-flex-wrap:wrap;
+justify-content:space-between;
+gap:20px;
+}
+.state{
+flex:1;
+padding:30px;
+border-radius:20px;
+background:#020617;
+text-align:center;
+opacity:.3;
+transition:.4s;
+}
+.state.active{
+opacity:1;
+outline:3px solid var(--accent);
+}
+
+/* SVG CRAFT */
+svg{
+width:100%;
+max-width:800px;
+display:block;
+margin:auto;
 }
 .node{
-padding:20px 28px;
-background:var(--card);
-border-radius:14px;
-font-weight:700;
+fill:#1f2937;
+stroke:#2ecc71;
+stroke-width:3;
+cursor:pointer;
 }
-.line{
-width:80px;height:5px;
-background:var(--primary);
-animation:flow 1.5s infinite;
+.link{
+stroke:#2ecc71;
+stroke-width:4;
+stroke-dasharray:10;
+animation:dash 2s linear infinite;
 }
-@keyframes flow{0%{opacity:.3}100%{opacity:1}}
+@keyframes dash{
+to{stroke-dashoffset:-20}
+}
 
-/* FADE */
-.fade{opacity:0;transform:translateY(40px);transition:.8s}
-.fade.show{opacity:1;transform:none}
+/* SOUND */
+.sound{
+position:fixed;
+top:20px;
+right:20px;
+background:var(--accent);
+color:#000;
+padding:12px 16px;
+border-radius:14px;
+font-weight:800;
+cursor:pointer;
+z-index:999;
+}
 
 /* FOOTER */
 footer{
-background:var(--card);
-padding:40px;
+padding:60px;
 text-align:center;
-font-size:.9rem;
+background:#020617;
 }
 
 /* MOBILE */
-@media(max-width:600px){
-.hero h1{font-size:2.2rem}
+@media(max-width:900px){
+.hero h1{font-size:2.6rem}
+.ai{flex-direction:column}
 }
 </style>
 </head>
 
 <body>
 
-<header>
-<strong>Island Survival</strong>
-<button onclick="toggleTheme()">🌙</button>
-</header>
+<!-- SOUND -->
+<div class="sound" id="soundBtn">🔊 Sound OFF</div>
+<audio id="ambience" loop>
+<source src="audio/ambience.mp3" type="audio/mpeg">
+</audio>
 
-<section class="hero">
-<h1>Island Survival</h1>
-<p>Explore islands, gather resources, craft items, fight enemies, and survive at your own pace.</p>
-<a href="https://play.google.com/store" target="_blank">Download on Google Play</a>
-</section>
+<!-- HERO -->
+<div class="hero">
+<div class="clouds"></div>
+<div class="rain"></div>
+<div>
+<h1>ISLAND SURVIVAL</h1>
+<p>Stranded. Alone. Survive the island.</p>
 
-<!-- ABOUT -->
-<section class="fade">
-<h2>About the Game</h2>
-<p style="text-align:center;max-width:900px;margin:auto">
-Island Survival is a relaxing casual survival game featuring crafting, enemies, missions,
-day/night cycles, weather systems, energy management and multiple islands.
-</p>
-</section>
+<!-- PLAY STORE BADGE -->
+<a href="https://play.google.com/store/apps/details?id=YOUR_PACKAGE"
+aria-label="Download Island Survival on Google Play">
+<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png"
+alt="Get it on Google Play">
+</a>
+</div>
+</div>
 
-<!-- TRAILER -->
-<section class="fade">
-<h2>Game Trailer</h2>
-<div class="video">
-<iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe>
+<!-- ENEMY AI -->
+<section>
+<h2>Enemy AI Behavior</h2>
+<div class="ai" id="ai">
+<div class="state">Patrol</div>
+<div class="state">Detect</div>
+<div class="state">Chase</div>
+<div class="state">Attack</div>
+<div class="state">Retreat</div>
 </div>
 </section>
 
-<!-- RESOURCES -->
-<section class="fade">
-<h2>Resources</h2>
-<div class="grid">
-<div class="card"><h3>🌲 Wood</h3><p>Chopped from trees</p><img src="images/image1.png"></div>
-<div class="card"><h3>🪨 Stone</h3><p>Mined from rocks</p><img src="images/image1.png"></div>
-<div class="card"><h3>🧵 Fiber</h3><img src="images/image1.png"></div>
-<div class="card"><h3>🍓 Berries</h3><img src="images/image1.png"></div>
-<div class="card"><h3>🥥 Coconut</h3><img src="images/image1.png"></div>
-<div class="card"><h3>🎃 Pumpkin</h3><img src="images/image1.png"></div>
-<div class="card"><h3>🐟 Fish</h3><img src="images/image1.png"></div>
-</div>
-</section>
+<!-- CRAFTING GRAPH -->
+<section>
+<h2>Crafting System</h2>
 
-<!-- CRAFTED -->
-<section class="fade">
-<h2>Crafted & Cooked Items</h2>
-<div class="grid">
-<div class="card"><h3>🧱 Planks</h3><img src="images/image1.png"></div>
-<div class="card"><h3>🧱 Bricks</h3><img src="images/image1.png"></div>
-<div class="card"><h3>🪢 Rope</h3><img src="images/image1.png"></div>
-<div class="card"><h3>✂️ Scissors</h3><img src="images/image1.png"></div>
-<div class="card"><h3>🍯 Jam</h3><img src="images/image1.png"></div>
-<div class="card"><h3>🍲 Soup</h3><img src="images/image1.png"></div>
-<div class="card"><h3>🔥 Cooked Fish</h3><img src="images/image1.png"></div>
-</div>
-</section>
+<svg viewBox="0 0 800 300">
+<line class="link" x1="150" y1="150" x2="350" y2="150"/>
+<line class="link" x1="350" y1="150" x2="550" y2="150"/>
 
-<!-- CRAFT TREE -->
-<section class="fade">
-<h2>Crafting Tree</h2>
-<div class="craft">
-<div class="node">🌲 Wood</div>
-<div class="line"></div>
-<div class="node">🧱 Planks</div>
-<div class="line"></div>
-<div class="node">🏠 Building</div>
-</div>
-</section>
+<circle class="node" cx="150" cy="150" r="40" onclick="craft('Wood → Harvested from trees')"/>
+<circle class="node" cx="350" cy="150" r="40" onclick="craft('Planks → Crafted from wood')"/>
+<circle class="node" cx="550" cy="150" r="40" onclick="craft('Building → Use planks to build shelter')"/>
+</svg>
 
-<!-- ENEMIES -->
-<section class="fade">
-<h2>Enemies & Bosses</h2>
-<div class="grid">
-<div class="card"><h3>🧟 Forest Enemy</h3><p>HP ★★★ Damage ★★</p><img src="images/image1.png"></div>
-<div class="card"><h3>🐗 Wild Beast</h3><p>HP ★★★★ Damage ★★★</p><img src="images/image1.png"></div>
-<div class="card"><h3>👹 Island Guardian (Boss)</h3><p>HP ★★★★★ Damage ★★★★★</p><img src="images/image1.png"></div>
-</div>
-</section>
-
-<!-- MAP -->
-<section class="fade">
-<h2>Multiple Islands</h2>
-<div class="grid">
-<div class="card"><h3>🌴 Starter Island</h3><img src="images/image1.png"></div>
-<div class="card"><h3>🌋 Volcano Island</h3><img src="images/image1.png"></div>
-<div class="card"><h3>❄️ Frozen Island</h3><img src="images/image1.png"></div>
-</div>
+<p id="craftText" style="text-align:center;margin-top:20px"></p>
 </section>
 
 <footer>
-© 2025 Aarohi Studio ·
-<a href="privacy-policy.html">Privacy Policy</a><br>
-Support the developer by downloading and sharing the game ❤️
+© 2025 Aarohi Studio  
+<br>Casual survival adventure built with passion
 </footer>
 
-<!-- IMAGE MODAL -->
-<div id="modal" onclick="this.style.display='none'">
-<img id="modalImg">
-</div>
-
 <script>
-// DARK MODE BY SYSTEM TIME
-const h=new Date().getHours();
-if(h>=18||h<=5)document.body.classList.add("dark");
+// SOUND
+const audio=document.getElementById("ambience");
+const btn=document.getElementById("soundBtn");
+let playing=false;
 
-function toggleTheme(){
-document.body.classList.toggle("dark");
+btn.onclick=()=>{
+playing=!playing;
+if(playing){
+audio.play();
+btn.textContent="🔊 Sound ON";
+}else{
+audio.pause();
+btn.textContent="🔇 Sound OFF";
+}
+};
+document.addEventListener("visibilitychange",()=>{
+if(document.hidden) audio.pause();
+});
+
+// AI ANIMATION
+let i=0;
+setInterval(()=>{
+document.querySelectorAll(".state").forEach(s=>s.classList.remove("active"));
+document.querySelectorAll(".state")[i].classList.add("active");
+i=(i+1)%5;
+},1500);
+
+// CRAFT TEXT
+function craft(text){
+document.getElementById("craftText").textContent=text;
 }
 
-// FADE IN
-const obs=new IntersectionObserver(e=>{
-e.forEach(x=>x.isIntersecting&&x.target.classList.add("show"))
-});
-document.querySelectorAll(".fade").forEach(el=>obs.observe(el));
-
-// IMAGE MODAL
-document.querySelectorAll("img").forEach(img=>{
-img.onclick=()=>{modal.style.display="flex";modalImg.src=img.src;}
-});
+// SERVICE WORKER
+if("serviceWorker" in navigator){
+navigator.serviceWorker.register("sw.js");
+}
 </script>
 
 </body>
