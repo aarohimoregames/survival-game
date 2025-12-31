@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Island Survival – Casual Survival Adventure</title>
+<title>Island Survival – Casual Survival Adventure Game</title>
 
-<meta name="description" content="Island Survival is a casual survival game with crafting, enemies, bosses, missions, and multiple islands.">
+<meta name="description" content="Island Survival is a casual survival game where players gather resources, craft items, fight enemies, and conquer islands.">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- SEO -->
 <meta property="og:title" content="Island Survival">
-<meta property="og:description" content="Explore islands, craft tools, fight enemies, and survive at your pace">
+<meta property="og:description" content="Gather, Craft, Build, Fight & Explore Multiple Islands">
 <meta property="og:image" content="assets/cover.jpg">
 <meta property="og:type" content="website">
 
@@ -18,12 +18,11 @@
 <style>
 /* ---------------- ROOT ---------------- */
 :root {
-    --sky-day: linear-gradient(#87ceeb, #e0f6ff);
-    --sky-night: linear-gradient(#020617, #0f172a);
-    --bg: #f5f7fa;
+    --bg: #eef2f7;
     --card: #ffffff;
     --text: #1f2933;
     --accent: #2ecc71;
+    --dark: #0f172a;
 }
 
 body.night {
@@ -37,121 +36,81 @@ body {
     font-family: system-ui, Arial, sans-serif;
     background: var(--bg);
     color: var(--text);
-    overflow-x: hidden;
-}
-
-/* ---------------- SKY ---------------- */
-.sky {
-    height: 100vh;
-    background: var(--sky-day);
-    position: relative;
-    overflow: hidden;
-}
-
-body.night .sky {
-    background: var(--sky-night);
-}
-
-/* CLOUDS */
-.cloud {
-    position: absolute;
-    top: 15%;
-    width: 220px;
-    opacity: 0.8;
-    animation: moveClouds 60s linear infinite;
-}
-
-.cloud:nth-child(2) { top: 30%; animation-duration: 90s; }
-.cloud:nth-child(3) { top: 45%; animation-duration: 120s; }
-
-@keyframes moveClouds {
-    from { transform: translateX(-300px); }
-    to { transform: translateX(120vw); }
-}
-
-/* ---------------- PARALLAX ISLAND ---------------- */
-.parallax {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 60vh;
-}
-
-.layer {
-    position: absolute;
-    bottom: 0;
-    width: 200%;
-    height: 100%;
-    background-repeat: repeat-x;
-    animation: moveLayer linear infinite;
-}
-
-.layer.back {
-    background-image: url("assets/image1.png");
-    animation-duration: 120s;
-}
-
-.layer.mid {
-    background-image: url("assets/image1.png");
-    animation-duration: 80s;
-}
-
-.layer.front {
-    background-image: url("assets/image1.png");
-    animation-duration: 40s;
-}
-
-@keyframes moveLayer {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
 }
 
 /* ---------------- HERO ---------------- */
 .hero {
-    position: absolute;
-    top: 20%;
-    width: 100%;
+    height: 90vh;
+    background: linear-gradient(#7dd3fc, #22c55e);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     text-align: center;
     color: white;
 }
 
 .hero h1 {
-    font-size: 3em;
+    font-size: 3.5em;
 }
 
-.hero a img {
+.hero p {
+    font-size: 1.2em;
+    max-width: 700px;
+    margin: auto;
+}
+
+.hero img {
     height: 70px;
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
 /* ---------------- SECTIONS ---------------- */
 section {
-    padding: 80px 5vw;
     max-width: 1400px;
     margin: auto;
+    padding: 90px 6vw;
 }
 
 h2 {
-    font-size: 2.2em;
+    font-size: 2.4em;
     margin-bottom: 30px;
+}
+
+/* ---------------- GAME LOOP ---------------- */
+.loop {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+    gap: 30px;
+}
+
+.loop div {
+    background: var(--card);
+    border-radius: 18px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.loop div span {
+    font-size: 2em;
 }
 
 /* ---------------- RESOURCES ---------------- */
 .resources {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
     gap: 30px;
 }
 
 .resource {
     background: var(--card);
     border-radius: 18px;
-    padding: 20px;
+    padding: 25px;
     position: relative;
 }
 
 .resource img {
-    width: 120px;
+    width: 140px;
     float: right;
     cursor: pointer;
     transition: transform 0.3s;
@@ -159,6 +118,62 @@ h2 {
 
 .resource img:hover {
     transform: scale(1.1);
+}
+
+/* ---------------- CRAFT TREE ---------------- */
+.craft-tree {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.node {
+    background: var(--card);
+    padding: 20px 30px;
+    border-radius: 16px;
+    position: relative;
+}
+
+.node::after {
+    content: "→";
+    position: absolute;
+    right: -30px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5em;
+}
+
+/* ---------------- ENEMIES ---------------- */
+.enemies {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px,1fr));
+    gap: 30px;
+}
+
+.enemy {
+    background: var(--card);
+    border-radius: 20px;
+    padding: 25px;
+}
+
+.enemy img {
+    width: 100%;
+    border-radius: 14px;
+}
+
+/* ---------------- MAP ---------------- */
+.map {
+    background: var(--card);
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+}
+
+/* ---------------- FOOTER ---------------- */
+footer {
+    background: var(--card);
+    padding: 40px;
+    text-align: center;
 }
 
 /* ---------------- MODAL ---------------- */
@@ -174,115 +189,65 @@ h2 {
 .modal img {
     max-width: 90%;
     border-radius: 20px;
-    animation: zoom 0.4s ease;
-}
-
-@keyframes zoom {
-    from { transform: scale(0.6); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-}
-
-/* ---------------- CRAFTING GRAPH ---------------- */
-svg {
-    width: 100%;
-    height: 500px;
-}
-
-/* ---------------- ENEMIES ---------------- */
-.enemies {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
-    gap: 30px;
-}
-
-.enemy {
-    background: var(--card);
-    border-radius: 20px;
-    padding: 20px;
-}
-
-.enemy img {
-    width: 100%;
-}
-
-/* ---------------- SKILL TREE ---------------- */
-.skill-tree {
-    display: flex;
-    gap: 30px;
-}
-
-.skill {
-    background: var(--card);
-    padding: 20px;
-    border-radius: 16px;
-}
-
-/* ---------------- FOOTER ---------------- */
-footer {
-    text-align: center;
-    padding: 40px;
-    background: var(--card);
 }
 </style>
 </head>
 
 <body>
 
-<!-- SKY -->
-<div class="sky">
-    <img src="assets/cloud.png" class="cloud">
-    <img src="assets/cloud.png" class="cloud">
-    <img src="assets/cloud.png" class="cloud">
-
-    <div class="parallax">
-        <div class="layer back"></div>
-        <div class="layer mid"></div>
-        <div class="layer front"></div>
-    </div>
-
-    <div class="hero">
-        <h1>Island Survival</h1>
-        <p>Craft · Explore · Fight · Survive</p>
-        <a href="https://play.google.com/store">
-            <img src="assets/google-play-badge.png">
-        </a>
-    </div>
+<!-- HERO -->
+<div class="hero">
+    <h1>Island Survival</h1>
+    <p>Gather resources, craft tools, build shelters, fight enemies and conquer dangerous islands.</p>
+    <a href="https://play.google.com/store">
+        <img src="assets/google-play-badge.png">
+    </a>
 </div>
+
+<!-- GAME LOOP -->
+<section>
+<h2>Gameplay Loop</h2>
+<div class="loop">
+    <div><span>🌴</span><p>Explore Islands</p></div>
+    <div><span>🪓</span><p>Gather Resources</p></div>
+    <div><span>🔨</span><p>Craft & Build</p></div>
+    <div><span>⚔️</span><p>Fight Enemies</p></div>
+    <div><span>👑</span><p>Defeat Bosses</p></div>
+</div>
+</section>
 
 <!-- RESOURCES -->
 <section>
-<h2>Resources & Crafting</h2>
+<h2>Resources & Conversions</h2>
 <div class="resources">
 <div class="resource">
 <h3>Wood → Planks</h3>
-<p>Chop trees to craft planks for building shelters.</p>
+<p>Used for shelters, tools, and bridges.</p>
 <img src="assets/image1.png" onclick="openModal(this.src)">
 </div>
 
 <div class="resource">
 <h3>Stone → Bricks</h3>
-<p>Mine stones to craft strong brick structures.</p>
+<p>Stronger structures and defenses.</p>
 <img src="assets/image1.png" onclick="openModal(this.src)">
 </div>
 
 <div class="resource">
-<h3>Fish → Cooked Fish</h3>
-<p>Catch fish and cook to restore energy.</p>
+<h3>Fish → Cooked Food</h3>
+<p>Restores energy and stamina.</p>
 <img src="assets/image1.png" onclick="openModal(this.src)">
 </div>
 </div>
 </section>
 
-<!-- CRAFTING GRAPH -->
+<!-- CRAFT TREE -->
 <section>
-<h2>Crafting Tree</h2>
-<svg>
-<line x1="100" y1="250" x2="300" y2="150" stroke="#2ecc71" stroke-width="4"/>
-<line x1="100" y1="250" x2="300" y2="350" stroke="#2ecc71" stroke-width="4"/>
-<circle cx="100" cy="250" r="30" fill="#2ecc71"/>
-<circle cx="300" cy="150" r="30" fill="#16a34a"/>
-<circle cx="300" cy="350" r="30" fill="#16a34a"/>
-</svg>
+<h2>Crafting Progression</h2>
+<div class="craft-tree">
+    <div class="node">Wood</div>
+    <div class="node">Planks</div>
+    <div class="node">Buildings</div>
+</div>
 </section>
 
 <!-- ENEMIES -->
@@ -292,19 +257,18 @@ footer {
 <div class="enemy">
 <img src="assets/image1.png">
 <h3>Island Guardian</h3>
-<p>HP: 5000 · Slow but deadly</p>
-<a href="boss-guardian.html">View Boss</a>
+<p>High HP · Area attacks · Guards island core</p>
+<a href="boss-guardian.html">View Boss Details</a>
 </div>
 </div>
 </section>
 
-<!-- SKILLS -->
+<!-- MAP -->
 <section>
-<h2>Skill Tree</h2>
-<div class="skill-tree">
-<div class="skill">Chopping Speed</div>
-<div class="skill">Mining Power</div>
-<div class="skill">Combat Damage</div>
+<h2>Multi-Island World</h2>
+<div class="map">
+<p>Explore multiple islands, each with unique enemies, resources, and bosses.</p>
+<img src="assets/image1.png" style="width:100%;border-radius:16px">
 </div>
 </section>
 
@@ -315,27 +279,18 @@ footer {
 </audio>
 </footer>
 
-<!-- IMAGE MODAL -->
 <div class="modal" onclick="this.style.display='none'">
 <img id="modalImg">
 </div>
 
 <script>
-/* MODAL */
 function openModal(src){
     document.querySelector(".modal").style.display="flex";
     document.getElementById("modalImg").src = src;
 }
 
-/* DAY/NIGHT SYNC */
 const hour = new Date().getHours();
 if(hour >= 18 || hour <= 6) document.body.classList.add("night");
-
-/* PWA */
-let deferredPrompt;
-window.addEventListener("beforeinstallprompt", e=>{
-    deferredPrompt = e;
-});
 </script>
 
 </body>
