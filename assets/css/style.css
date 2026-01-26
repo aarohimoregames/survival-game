@@ -1417,7 +1417,7 @@ body {
 
   .company-logo {
   max-height: 100%;
-  max-width: 120px;   /* ⬅ cap the width */
+  max-width: 80px;   /* ⬅ cap the width */
   width: auto;
   height: auto;
   object-fit: contain;
