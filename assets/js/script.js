@@ -62,6 +62,8 @@ if (playBtn && ytVideo && ytPoster) {
     ytPoster.style.display = 'none';
     playBtn.style.display = 'none';
     ytVideo.style.display = 'block';
-    ytVideo.src += "&autoplay=1";
+
+    ytVideo.src =
+      "https://www.youtube.com/embed/goMGp6VRVMw?autoplay=1&rel=0&modestbranding=1";
   });
 }
