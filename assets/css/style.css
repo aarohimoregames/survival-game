@@ -1416,8 +1416,11 @@ body {
   }
 
   .company-logo {
-  height: 40px;          /* adjust as needed */
+  max-height: 100%;
+  max-width: 120px;   /* ⬅ cap the width */
   width: auto;
+  height: auto;
+  object-fit: contain;
   display: block;
 }
 
