@@ -181,7 +181,7 @@
 
           <div class="hero-content">
 
-            <p class="hero-subtitle">World Gaming</p>
+            <p class="hero-subtitle">Survival Gaming</p>
 
             <h1 class="h1 hero-title">
               Gather <span class="span">Build</span> Craft
@@ -363,15 +363,35 @@
 
             <figure class="live-match-banner img-holder" style="--width: 800; --height: 470;">
 
-              <img src="./assets/images/live-match-banner.jpg" width="800" height="470" loading="lazy"
-                alt="Live Match Video" class="img-cover">
+              <!-- Poster Image -->
+              <img id="ytPoster"
+                src="./assets/images/live-match-banner.jpg"
+                width="800"
+                height="470"
+                loading="lazy"
+                alt="Survival Island Gameplay Demo"
+                class="img-cover">
 
+              <!-- YouTube Iframe (hidden initially) -->
+              <iframe id="ytVideo"
+                width="800"
+                height="470"
+                class="img-cover"
+                src="https://www.youtube.com/embed/goMGp6VRVMw?rel=0&modestbranding=1"
+                title="Survival Island Gameplay Demo"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+                style="display:none;">
+              </iframe>
 
+              <!-- Play Button -->
               <button class="play-btn" aria-label="play video">
                 <ion-icon name="play"></ion-icon>
               </button>
 
             </figure>
+
 
             <div class="live-match-player">
 
