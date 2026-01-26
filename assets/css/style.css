@@ -1415,6 +1415,12 @@ body {
     font-weight: var(--fw-600);
   }
 
+  .company-logo {
+  height: 40px;          /* adjust as needed */
+  width: auto;
+  display: block;
+}
+
   .countdown-text .span {
     display: inline-block;
     color: var(--xiketic);
