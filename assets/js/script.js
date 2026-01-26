@@ -51,3 +51,17 @@ window.addEventListener("scroll", function () {
     backTopBtn.classList.remove("active");
   }
 });
+
+// YouTube video play on click
+const playBtn = document.querySelector('.play-btn');
+const ytVideo = document.getElementById('ytVideo');
+const ytPoster = document.getElementById('ytPoster');
+
+if (playBtn && ytVideo && ytPoster) {
+  playBtn.addEventListener('click', () => {
+    ytPoster.style.display = 'none';
+    playBtn.style.display = 'none';
+    ytVideo.style.display = 'block';
+    ytVideo.src += "&autoplay=1";
+  });
+}
